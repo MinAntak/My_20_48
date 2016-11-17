@@ -76,19 +76,41 @@ public class Element {
 
     private void newRandom() {
         int randx, randy;
+        boolean isOccupied = true;
+        Element tmp;
+
         Random rand = new Random();
         randx = rand.nextInt(4);
         randy = rand.nextInt(4);
-        for (int i = 0; i < elements.size(); i++) {
-            Element tmp = elements.get(i);
-            if (tmp.getx()==randx && tmp.gety() == randy) {
-                newRandom();
-                return;
+        int fieldsChecked = 0;
+        int tempx = randx;
+        int tempy = randy;
+        while(isOccupied) {
+            isOccupied = false;
+            for (int i = 0; i < elements.size(); i++) {
+                tmp = elements.get(i);
+                if (tmp.testPosition(tempx, tempy)) {
+                    isOccupied = true;
+                }
+            }
+            if (isOccupied) {
+                fieldsChecked++;
+                if(tempx < 3) tempx++;
+                else {
+                    if (tempy < 3) tempy++;
+                    else tempy = 0;
+                    tempx = 0;
+                }
+            }
+            if (fieldsChecked == 15) {
+                isOccupied = false; //just to quit while
             }
         }
-        x = randx;
-        y = randy;
-
+        if (fieldsChecked == 15) {
+            System.out.println("Game Over!");
+        }
+        x = tempx;
+        y = tempy;
     }
 
     public boolean testPosition(int testedX, int testedY) {

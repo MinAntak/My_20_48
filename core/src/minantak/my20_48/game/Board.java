@@ -57,4 +57,7 @@ public class Board {
 
     }
 
+    public void showOver() {
+        fontScore.draw(batch, "GAME OVER!", screenWidth/4, screenHeight/2);
+    }
 }

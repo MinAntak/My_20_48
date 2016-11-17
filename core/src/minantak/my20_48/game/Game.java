@@ -16,6 +16,7 @@ public class Game extends ApplicationAdapter {
     Board board;
     Score score;
     float screenHeight, screenWidth;
+    boolean isOver;
 	SpriteBatch batch;
     private ArrayList<Element> elements;
     Move move;
@@ -37,26 +38,35 @@ public class Game extends ApplicationAdapter {
 
             @Override
             public void onUp() {
-                move.moveUp();
-                elements.add(new Element(2, elements));
+                if(!isOver) {
+                    move.moveUp();
+                    elements.add(new Element(2, elements));
+                }
+
             }
 
             @Override
             public void onRight() {
-                move.moveRight();
-                elements.add(new Element(2, elements));
+                if(!isOver) {
+                    move.moveRight();
+                    elements.add(new Element(2, elements));
+                }
             }
 
             @Override
             public void onLeft() {
-                move.moveLeft();
-                elements.add(new Element(2, elements));
+                if(!isOver) {
+                    move.moveLeft();
+                    elements.add(new Element(2, elements));
+                }
             }
 
             @Override
             public void onDown() {
-                move.moveDown();
-                elements.add(new Element(2, elements));
+                if(!isOver) {
+                    move.moveDown();
+                    elements.add(new Element(2, elements));
+                }
             }
         }));
 	}
@@ -78,43 +88,51 @@ public class Game extends ApplicationAdapter {
 
 
 	public void update() {
+        if (elements.size() > 16)
+            isOver = true;
+
+        if (isOver)
+            board.showOver();
+
         timer += Gdx.graphics.getDeltaTime();
 
-        if(timer-savedTime > 0.2) {
+        if(timer-savedTime > 0.3 & !isOver) {
             if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 move.moveUp();
                 elements.add(new Element(2, elements));
+                savedTime = timer;
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 move.moveDown();
                 elements.add(new Element(2, elements));
+                savedTime = timer;
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 move.moveLeft();
                 elements.add(new Element(2, elements));
+                savedTime = timer;
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 move.moveRight();
                 elements.add(new Element(2, elements));
+                savedTime = timer;
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.E)) {
                 elements.add(new Element(2, elements));
+                savedTime = timer;
             }
-            else if (Gdx.input.isTouched()) {
-                int x = Gdx.input.getX();
-                int y = Gdx.graphics.getHeight() - Gdx.input.getY();
-                //System.out.println(x + " " + y);
-
-                if (x > (screenWidth*0.05) && y > (screenWidth*0.05) && x < (screenWidth*0.35) && y < (screenWidth*0.2)) {
-                    startGame();
-                }
-
-            }
-
 
         }
+        if (Gdx.input.isTouched()) {
+            int x = Gdx.input.getX();
+            int y = Gdx.graphics.getHeight() - Gdx.input.getY();
+            //System.out.println(x + " " + y);
 
-		//batch.draw(element.getImg(), 0, 0);
+            if (x > (screenWidth*0.05) && y > (screenWidth*0.05) && x < (screenWidth*0.35) && y < (screenWidth*0.2)) {
+                startGame();
+            }
+
+        }
 
 
 
@@ -123,6 +141,7 @@ public class Game extends ApplicationAdapter {
 	}
 
 	public void startGame() {
+        isOver =false;
         turn = 0;
         while (elements.size() > 0) {
             elements.remove(0);
