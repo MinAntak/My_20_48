@@ -3,13 +3,12 @@ package minantak.my20_48.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -21,19 +20,21 @@ public class Game extends ApplicationAdapter {
     Move move;
     int turn;
     float timer, savedTime;
-    private Texture blank, field, restart, scoreN;
+    private Texture blank, field, restart, scoreN, overTexture;
     private SpriteBatch batch;
     private BitmapFont fontScore;
     private Score score;
     private ArrayList<Element> elements;
+    private String version;
 
 	@Override
 	public void create () {
-        blank = new Texture("blank.png");
-        field = new Texture("field.png");
-        restart = new Texture("restart.png");
-        scoreN = new Texture("score.png");
-        fontScore = new BitmapFont(Gdx.files.internal("segoe.fnt"));
+        blank = new Texture("images/blank.png");
+        field = new Texture("images/field.png");
+        restart = new Texture("images/restart.png");
+        scoreN = new Texture("images/score.png");
+        overTexture = new Texture("images/over.png");
+        fontScore = new BitmapFont(Gdx.files.internal("images/segoe.fnt"));
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
         score = new Score();
@@ -41,6 +42,7 @@ public class Game extends ApplicationAdapter {
         elements = new ArrayList<Element>();
         //board = new Board(batch, elements, score);
         move = new Move(elements, score);
+        version = "v. 0.0.21 alfa";
 		startGame();
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
@@ -100,7 +102,10 @@ public class Game extends ApplicationAdapter {
                     (float) (screenWidth*0.3+(screenWidth*0.02*(y+1))+(screenWidth*0.2*y)),
                     (float) (screenWidth*0.2), (float) (screenWidth*0.2));
         }
+        fontScore.setColor(Color.FIREBRICK);
+        fontScore.draw(batch, version, (float) (screenWidth*0.05),(float) (screenHeight*0.98));
 
+        fontScore.setColor(Color.WHITE);
         batch.draw(restart, (float) (screenWidth*0.05), (float) (screenWidth*0.05),
                 (float) (screenWidth*0.3), (float) (screenWidth*0.15));
         batch.draw(scoreN, (float) (screenWidth*0.65), (float) (screenWidth*0.05),
@@ -123,6 +128,7 @@ public class Game extends ApplicationAdapter {
         restart.dispose();
         scoreN.dispose();
         batch.dispose();
+        overTexture.dispose();
 	}
 
 
@@ -192,7 +198,10 @@ public class Game extends ApplicationAdapter {
     }
 
     public void showOver() {
-        fontScore.draw(batch, "GAME OVER!", screenWidth/4, screenHeight/2);
+
+
+        batch.draw(overTexture, screenWidth/4, (screenHeight/2)-50, screenWidth/2, screenWidth/4);
+        fontScore.draw(batch, "Score: " + score.getScore(), screenWidth/4, screenHeight/2);
     }
 
 	public void startGame() {
