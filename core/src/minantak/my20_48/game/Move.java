@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Move {
+    private Element tmp, tmp1;
     private ArrayList<Element> elements;
     private Score score;
     Move(ArrayList<Element> elements, Score score) {
@@ -20,13 +21,13 @@ public class Move {
             for (int j = 0 ; j < 4; j++) {
                 int goX = i, goY = j;
                 for (int m = 0; m < elements.size(); m++) {
-                    Element tmp = elements.get(m);
-                    if (tmp.getx() == i && tmp.gety() == j) {
+                    tmp = elements.get(m);
+                    if (tmp.getx() == i && tmp.gety() == j && (!tmp.getNew())) {
                         toMove = true;
                         isFree = true;
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
-                                Element tmp1 = elements.get(n);
+                                tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX-1, goY)) {
                                     if(tmp1.getValue() == tmp.getValue()) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX-1, goY));
@@ -71,13 +72,13 @@ public class Move {
             for (int j = 0 ; j < 4; j++) {
                 int goX = i, goY = j;
                 for (int m = 0; m < elements.size(); m++) {
-                    Element tmp = elements.get(m);
-                    if (tmp.getx() == i && tmp.gety() == j) {
+                    tmp = elements.get(m);
+                    if (tmp.getx() == i && tmp.gety() == j && (!tmp.getNew())) {
                         toMove = true;
                         isFree = true;
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
-                                Element tmp1 = elements.get(n);
+                                tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX+1, goY)) {
                                     if(tmp1.getValue() == tmp.getValue()) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX+1, goY));
@@ -121,13 +122,13 @@ public class Move {
             for (int j = 0 ; j < 4; j++) {
                 int goX = j, goY = i;
                 for (int m = 0; m < elements.size(); m++) {
-                    Element tmp = elements.get(m);
-                    if (tmp.getx() == j && tmp.gety() == i) {
+                    tmp = elements.get(m);
+                    if (tmp.getx() == j && tmp.gety() == i && (!tmp.getNew())) {
                         toMove = true;
                         isFree = true;
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
-                                Element tmp1 = elements.get(n);
+                                tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX, goY+1)) {
                                     if(tmp1.getValue() == tmp.getValue()) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY+1));
@@ -170,13 +171,13 @@ public class Move {
             for (int j = 3 ; j >= 0; j--) {
                 int goX = j, goY = i;
                 for (int m = 0; m < elements.size(); m++) {
-                    Element tmp = elements.get(m);
-                    if (tmp.getx() == j && tmp.gety() == i) {
+                    tmp = elements.get(m);
+                    if (tmp.getx() == j && tmp.gety() == i && (!tmp.getNew())) {
                         toMove = true;
                         isFree = true;
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
-                                Element tmp1 = elements.get(n);
+                                tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX, goY-1)) {
                                     if(tmp1.getValue() == tmp.getValue()) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY-1));

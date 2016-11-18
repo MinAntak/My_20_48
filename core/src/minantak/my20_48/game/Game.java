@@ -12,20 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game extends ApplicationAdapter {
-    //Board board;
     float screenHeight, screenWidth;
     boolean isOver;
+    Element tmp;
     Move move;
     int turn;
     float timer, savedTime;
-    boolean czymozna;
     private Texture blank, field, restart, scoreN;
     private SpriteBatch batch;
     private BitmapFont fontScore;
     private Score score;
     private ArrayList<Element> elements;
+
 	@Override
 	public void create () {
         blank = new Texture("blank.png");
@@ -46,34 +47,34 @@ public class Game extends ApplicationAdapter {
 
             @Override
             public void onUp() {
-                if(!isOver) {
+                if(timer-savedTime > 0.3 && !isOver) {
                     move.moveUp();
-                    elements.add(new Element(2, elements));
+                    increaseTurn();
                 }
 
             }
 
             @Override
             public void onRight() {
-                if(!isOver) {
+                if(timer-savedTime > 0.3 && !isOver) {
                     move.moveRight();
-                    elements.add(new Element(2, elements));
+                    increaseTurn();
                 }
             }
 
             @Override
             public void onLeft() {
-                if(!isOver) {
+                if(timer-savedTime > 0.3 && !isOver) {
                     move.moveLeft();
-                    elements.add(new Element(2, elements));
+                    increaseTurn();
                 }
             }
 
             @Override
             public void onDown() {
-                if(!isOver) {
+                if(timer-savedTime > 0.3 && !isOver) {
                     move.moveDown();
-                    elements.add(new Element(2, elements));
+                    increaseTurn();
                 }
             }
         }));
@@ -92,7 +93,7 @@ public class Game extends ApplicationAdapter {
             }
 
         for (int m = 0 ; m < elements.size(); m++) {
-            Element tmp = elements.get(m);
+            tmp = elements.get(m);
             int x = tmp.getx();
             int y = tmp.gety();
             batch.draw(tmp.getImg(), (float) (screenWidth*0.05+(screenWidth*0.02*(x+1))+(screenWidth*0.2*x)),
@@ -112,7 +113,16 @@ public class Game extends ApplicationAdapter {
 	
 	@Override
 	public void dispose () {
-		batch.dispose();
+        while (elements.size() > 0) {
+            elements.get(0).dispose();
+            elements.remove(0);
+        }
+        blank.dispose();
+        field.dispose();
+        fontScore.dispose();
+        restart.dispose();
+        scoreN.dispose();
+        batch.dispose();
 	}
 
 
@@ -128,27 +138,23 @@ public class Game extends ApplicationAdapter {
         if(timer-savedTime > 0.3 & !isOver) {
             if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 move.moveUp();
-                elements.add(new Element(2, elements));
-                savedTime = timer;
+                increaseTurn();
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 move.moveDown();
-                elements.add(new Element(2, elements));
-                savedTime = timer;
+                increaseTurn();
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 move.moveLeft();
-                elements.add(new Element(2, elements));
-                savedTime = timer;
+                increaseTurn();
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 move.moveRight();
-                elements.add(new Element(2, elements));
-                savedTime = timer;
+
+                increaseTurn();
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.E)) {
                 elements.add(new Element(2, elements));
-                savedTime = timer;
             }
 
         }
@@ -168,6 +174,22 @@ public class Game extends ApplicationAdapter {
 
 
 	}
+
+    public void increaseTurn() {
+        turn++;
+        savedTime = timer;
+        for (int i = 0; i < elements.size(); i++) {
+            elements.get(i).resetNew();
+        }
+
+        Random rand = new Random();
+        int randvalue = rand.nextInt(10);
+        if (randvalue == 8) {
+            elements.add(new Element(4, elements));
+        }
+        else
+            elements.add(new Element(2, elements));
+    }
 
     public void showOver() {
         fontScore.draw(batch, "GAME OVER!", screenWidth/4, screenHeight/2);

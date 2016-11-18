@@ -12,6 +12,7 @@ import java.util.Random;
 public class Element {
     private int value;
     private int x, y;
+    private boolean isNew; //flag if this element was created in this turn
     private Texture img;
     private ArrayList<Element> elements;
 
@@ -19,8 +20,7 @@ public class Element {
     Element(int value, ArrayList<Element> elements ) {
         this.value = value;
         this.elements = elements;
-        x=1;
-        y=1;
+        this.isNew = false;
         initImage();
         newRandom();
     }
@@ -29,6 +29,7 @@ public class Element {
         this.elements = elements;
         this.x=x;
         this.y=y;
+        this.isNew = true;
         initImage();
     }
     private void initImage() {
@@ -121,11 +122,12 @@ public class Element {
 
     public int getx() { return x; }
     public int gety() { return y; }
-    public int getValue() {return value;}
-    public void putx(int x) { this.x = x;}
-    public void puty(int y) { this.y = y;}
-
+    public int getValue() {return value; }
+    public void putx(int x) { this.x = x; }
+    public void puty(int y) { this.y = y; }
+    public void resetNew() {isNew = false; }
     public void dispose() {
         img.dispose();
     }
+    public boolean getNew() {return isNew; }
 }
