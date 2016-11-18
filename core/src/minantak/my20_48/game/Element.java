@@ -15,6 +15,7 @@ public class Element {
     private Texture img;
     private ArrayList<Element> elements;
 
+
     Element(int value, ArrayList<Element> elements ) {
         this.value = value;
         this.elements = elements;
@@ -123,4 +124,8 @@ public class Element {
     public int getValue() {return value;}
     public void putx(int x) { this.x = x;}
     public void puty(int y) { this.y = y;}
+
+    public void dispose() {
+        img.dispose();
+    }
 }

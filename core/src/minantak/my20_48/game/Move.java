@@ -32,6 +32,8 @@ public class Move {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX-1, goY));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(m);
                                             elements.remove(n);
                                             n--;
@@ -81,6 +83,8 @@ public class Move {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX+1, goY));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(m);
                                             elements.remove(n);
                                             n--;
@@ -129,6 +133,8 @@ public class Move {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY+1));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(m);
                                             elements.remove(n);
                                             n--;
@@ -176,6 +182,8 @@ public class Move {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY-1));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(m);
                                             elements.remove(n);
                                             n--;
