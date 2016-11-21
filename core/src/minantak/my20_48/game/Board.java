@@ -12,9 +12,8 @@ import java.util.ArrayList;
  */
 
 public class Board {
-    private BitmapFont fontScore;
     private float screenHeight, screenWidth;
-    private Texture blank, field, restart, score;
+    //private Texture blank, field, restart, score;
     private SpriteBatch batch;
     private Score scoreN;
     private ArrayList<Element> elements;
@@ -25,11 +24,6 @@ public class Board {
         this.scoreN = scoreN;
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
-        blank = new Texture("blank.png");
-        field = new Texture("field.png");
-        restart = new Texture("restart.png");
-        score = new Texture("score.png");
-        fontScore = new BitmapFont(Gdx.files.internal("segoe.fnt"));
     }
 
     public void draw() {

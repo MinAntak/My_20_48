@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends ApplicationAdapter {
-    float screenHeight, screenWidth;
-    boolean isOver;
-    Element tmp;
-    Move move;
-    int turn;
-    float timer, savedTime;
+    private float screenHeight, screenWidth;
+    private boolean isOver;
+    private Element tmp;
+    private Move move;
+    private int turn;
+    private float timer, savedTime;
     private Texture blank, field, restart, scoreN, overTexture;
     private SpriteBatch batch;
     private BitmapFont fontScore;
@@ -30,11 +30,11 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-        blank = new Texture("images/blank.png");
-        field = new Texture("images/field.png");
-        restart = new Texture("images/restart.png");
-        scoreN = new Texture("images/score.png");
-        overTexture = new Texture("images/over.png");
+        blank = new Texture(Gdx.files.internal("images/blank.png"));
+        field = new Texture(Gdx.files.internal("images/field.png"));
+        restart = new Texture(Gdx.files.internal("images/restart.png"));
+        scoreN = new Texture(Gdx.files.internal("images/score.png"));
+        overTexture = new Texture(Gdx.files.internal("images/over.png"));
         fontScore = new BitmapFont(Gdx.files.internal("images/segoe.fnt"));
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
@@ -43,7 +43,7 @@ public class Game extends ApplicationAdapter {
         elements = new ArrayList<Element>();
         //board = new Board(batch, elements, score);
         move = new Move(elements, score);
-        version = "v. 0.0.22 alfa";
+        version = "v. 0.0.23 alfa";
 		startGame();
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector

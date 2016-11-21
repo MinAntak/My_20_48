@@ -1,5 +1,6 @@
 package minantak.my20_48.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -35,37 +36,37 @@ public class Element {
     private void initImage() {
         switch(value) {
             case 2:
-                img = new Texture("images/0002.png");
+                img = new Texture(Gdx.files.internal("images/0002.png"));
                 break;
             case 4:
-                img = new Texture("images/0004.png");
+                img = new Texture(Gdx.files.internal("images/0004.png"));
                 break;
             case 8:
-                img = new Texture("images/0008.png");
+                img = new Texture(Gdx.files.internal("images/0008.png"));
                 break;
             case 16:
-                img = new Texture("images/0016.png");
+                img = new Texture(Gdx.files.internal("images/0016.png"));
                 break;
             case 32:
-                img = new Texture("images/0032.png");
+                img = new Texture(Gdx.files.internal("images/0032.png"));
                 break;
             case 64:
-                img = new Texture("images/0064.png");
+                img = new Texture(Gdx.files.internal("images/0064.png"));
                 break;
             case 128:
-                img = new Texture("images/0128.png");
+                img = new Texture(Gdx.files.internal("images/0128.png"));
                 break;
             case 256:
-                img = new Texture("images/0256.png");
+                img = new Texture(Gdx.files.internal("images/0256.png"));
                 break;
             case 512:
-                img = new Texture("images/0512.png");
+                img = new Texture(Gdx.files.internal("images/0512.png"));
                 break;
             case 1024:
-                img = new Texture("images/1024.png");
+                img = new Texture(Gdx.files.internal("images/1024.png"));
                 break;
             case 2048:
-                img = new Texture("images/2048.png");
+                img = new Texture(Gdx.files.internal("images/2048.png"));
                 break;
             default:
                 break;
