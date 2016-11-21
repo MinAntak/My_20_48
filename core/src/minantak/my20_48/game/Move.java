@@ -29,7 +29,7 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX-1, goY)) {
-                                    if(tmp1.getValue() == tmp.getValue()) {
+                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX-1, goY));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
@@ -80,7 +80,7 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX+1, goY)) {
-                                    if(tmp1.getValue() == tmp.getValue()) {
+                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX+1, goY));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
@@ -129,7 +129,7 @@ public class Move {
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
-                                if (tmp1.testPosition(goX, goY+1)) {
+                                if (tmp1.testPosition(goX, goY+1) && (!tmp1.getNew())) {
                                     if(tmp1.getValue() == tmp.getValue()) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY+1));
                                         score.addScore(tmp.getValue()*2);
@@ -179,7 +179,7 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX, goY-1)) {
-                                    if(tmp1.getValue() == tmp.getValue()) {
+                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
                                         elements.add(new Element(tmp.getValue()*2, elements, goX, goY-1));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {

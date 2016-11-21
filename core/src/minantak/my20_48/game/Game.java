@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 
 
 import java.util.ArrayList;
@@ -42,10 +43,12 @@ public class Game extends ApplicationAdapter {
         elements = new ArrayList<Element>();
         //board = new Board(batch, elements, score);
         move = new Move(elements, score);
-        version = "v. 0.0.21 alfa";
+        version = "v. 0.0.22 alfa";
 		startGame();
 
-        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector(new SimpleDirectionGestureDetector.DirectionListener() {
+        Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector
+                (new SimpleDirectionGestureDetector.DirectionListener() {
+
 
             @Override
             public void onUp() {
@@ -88,10 +91,13 @@ public class Game extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		//board.draw();
-        batch.draw(field, (float) (screenWidth*0.05), (float) (screenWidth*0.3), (float) (screenWidth*0.9), (float) (screenWidth*0.9));
+        batch.draw(field, (float) (screenWidth*0.05), (float) (screenWidth*0.3),
+                (float) (screenWidth*0.9), (float) (screenWidth*0.9));
         for (int i = 0; i < 4 ; i++)
             for (int j = 0; j < 4 ; j++) {
-                batch.draw(blank, (float) (screenWidth*0.05+(screenWidth*0.02*(i+1))+(screenWidth*0.2*i)), (float) (screenWidth*0.3+(screenWidth*0.02*(j+1))+(screenWidth*0.2*j)), (float) (screenWidth*0.2), (float) (screenWidth*0.2));
+                batch.draw(blank, (float) (screenWidth*0.05+(screenWidth*0.02*(i+1))+(screenWidth*0.2*i)),
+                        (float) (screenWidth*0.3+(screenWidth*0.02*(j+1))+(screenWidth*0.2*j)),
+                        (float) (screenWidth*0.2), (float) (screenWidth*0.2));
             }
 
         for (int m = 0 ; m < elements.size(); m++) {
@@ -169,7 +175,8 @@ public class Game extends ApplicationAdapter {
             int y = Gdx.graphics.getHeight() - Gdx.input.getY();
             //System.out.println(x + " " + y);
 
-            if (x > (screenWidth*0.05) && y > (screenWidth*0.05) && x < (screenWidth*0.35) && y < (screenWidth*0.2)) {
+            if (x > (screenWidth*0.05) && y > (screenWidth*0.05) && x < (screenWidth*0.35)
+                    && y < (screenWidth*0.2)) {
                 startGame();
             }
 
