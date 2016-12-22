@@ -6,16 +6,18 @@ import java.util.ArrayList;
  * Created by Marcin on 17.11.2016.
  */
 
-public class Move {
+class Move {
     private Element tmp, tmp1;
     private ArrayList<Element> elements;
     private Score score;
-    Move(ArrayList<Element> elements, Score score) {
+    private Game game;
+    Move(ArrayList<Element> elements, Score score, Game game) {
         this.score = score;
         this.elements = elements;
+        this.game = game;
     }
 
-    public void moveLeft() {
+    void moveLeft() {
         boolean toMove, isFree;
         for (int i = 0; i < 4; i++)
             for (int j = 0 ; j < 4; j++) {
@@ -29,8 +31,9 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX-1, goY)) {
-                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
-                                        elements.add(new Element(tmp.getValue()*2, elements, goX-1, goY));
+                                    if(tmp1.getValue() == tmp.getValue() && m != n && (!tmp1.getNew())) {
+                                        elements.add(new Element(tmp.getValue()*2, elements,
+                                                goX-1, goY, game.getElementId()));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
                                             tmp.dispose();
@@ -40,6 +43,8 @@ public class Move {
                                             n--;
                                         }
                                         else {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(n);
                                             elements.remove(m);
                                             m--;
@@ -66,7 +71,7 @@ public class Move {
                 }
             }
     }
-    public void moveRight() {
+    void moveRight() {
         boolean toMove, isFree;
         for (int i = 3; i >= 0; i--)
             for (int j = 0 ; j < 4; j++) {
@@ -80,8 +85,9 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX+1, goY)) {
-                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
-                                        elements.add(new Element(tmp.getValue()*2, elements, goX+1, goY));
+                                    if(tmp1.getValue() == tmp.getValue() && m != n && (!tmp1.getNew())) {
+                                        elements.add(new Element(tmp.getValue()*2, elements,
+                                                goX+1, goY, game.getElementId()));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
                                             tmp.dispose();
@@ -91,6 +97,8 @@ public class Move {
                                             n--;
                                         }
                                         else {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(n);
                                             elements.remove(m);
                                             m--;
@@ -116,7 +124,8 @@ public class Move {
                 }
             }
     }
-    public void moveUp() {
+
+    void moveUp() {
         boolean toMove, isFree;
         for (int i = 3; i >= 0; i--)
             for (int j = 0 ; j < 4; j++) {
@@ -129,9 +138,10 @@ public class Move {
                         while(toMove) {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
-                                if (tmp1.testPosition(goX, goY+1) && (!tmp1.getNew())) {
+                                if (tmp1.testPosition(goX, goY+1) && m != n && (!tmp1.getNew())) {
                                     if(tmp1.getValue() == tmp.getValue()) {
-                                        elements.add(new Element(tmp.getValue()*2, elements, goX, goY+1));
+                                        elements.add(new Element(tmp.getValue()*2, elements,
+                                                goX, goY+1, game.getElementId()));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
                                             tmp.dispose();
@@ -141,6 +151,8 @@ public class Move {
                                             n--;
                                         }
                                         else {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(n);
                                             elements.remove(m);
                                             m--;
@@ -165,7 +177,8 @@ public class Move {
                 }
             }
     }
-    public void moveDown() {
+
+    void moveDown() {
         boolean toMove, isFree;
         for (int i = 0; i < 4; i++)
             for (int j = 3 ; j >= 0; j--) {
@@ -179,8 +192,9 @@ public class Move {
                             for (int n = 0; n < elements.size(); n++) {
                                 tmp1 = elements.get(n);
                                 if (tmp1.testPosition(goX, goY-1)) {
-                                    if(tmp1.getValue() == tmp.getValue() && (!tmp1.getNew())) {
-                                        elements.add(new Element(tmp.getValue()*2, elements, goX, goY-1));
+                                    if(tmp1.getValue() == tmp.getValue() && m != n && (!tmp1.getNew())) {
+                                        elements.add(new Element(tmp.getValue()*2, elements,
+                                                goX, goY-1, game.getElementId()));
                                         score.addScore(tmp.getValue()*2);
                                         if (m > n) {
                                             tmp.dispose();
@@ -190,6 +204,8 @@ public class Move {
                                             n--;
                                         }
                                         else {
+                                            tmp.dispose();
+                                            tmp1.dispose();
                                             elements.remove(n);
                                             elements.remove(m);
                                             m--;

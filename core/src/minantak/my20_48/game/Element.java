@@ -12,26 +12,32 @@ import java.util.Random;
 
 public class Element {
     private int value;
+    private int id;
+    private int previousX, previousY;
     private int x, y;
     private boolean isNew; //flag if this element was created in this turn
     private Texture img;
     private ArrayList<Element> elements;
 
 
-    Element(int value, ArrayList<Element> elements ) {
+    Element(int value, int elementID, ArrayList<Element> elements ) {
         this.value = value;
         this.elements = elements;
         this.isNew = false;
+        id = elementID;
         initImage();
         newRandom();
+        System.out.println(id);
     }
-    Element(int value, ArrayList<Element> elements, int x, int y) {
+    Element(int value, ArrayList<Element> elements, int x, int y, int elementId) {
         this.value = value;
         this.elements = elements;
         this.x=x;
         this.y=y;
         this.isNew = true;
+        id = elementId;
         initImage();
+        System.out.println(id);
     }
     private void initImage() {
         switch(value) {
@@ -73,7 +79,7 @@ public class Element {
         }
     }
 
-    public Texture getImg() {
+    Texture getImg() {
         return img;
     }
 
@@ -116,19 +122,25 @@ public class Element {
         y = tempy;
     }
 
-    public boolean testPosition(int testedX, int testedY) {
-        if (testedX == x && testedY == y) return true; //if this position is occupied
-        else return false; //if not
+    boolean testPosition(int testedX, int testedY) {
+        //if this position is occupied
+//if not
+        return testedX == x && testedY == y;
     }
 
-    public int getx() { return x; }
-    public int gety() { return y; }
-    public int getValue() {return value; }
-    public void putx(int x) { this.x = x; }
-    public void puty(int y) { this.y = y; }
-    public void resetNew() {isNew = false; }
-    public void dispose() {
+    int getx() { return x; }
+    int gety() { return y; }
+    int getValue() {return value; }
+    void putx(int x) { this.x = x; }
+    void puty(int y) { this.y = y; }
+    void resetNew() {isNew = false; }
+    void dispose() {
         img.dispose();
     }
-    public boolean getNew() {return isNew; }
+    boolean getNew() { return isNew; }
+
+    void setPrevious() {
+        previousX = x;
+        previousY = y;
+    }
 }

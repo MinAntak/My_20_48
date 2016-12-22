@@ -8,16 +8,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends ApplicationAdapter {
     private float screenHeight, screenWidth;
+    private int elementId; //increments id of elements, unique
     private boolean isOver;
-    private Element tmp;
     private Move move;
     private int turn;
     private float timer, savedTime;
@@ -41,9 +39,8 @@ public class Game extends ApplicationAdapter {
         score = new Score();
 		batch = new SpriteBatch();
         elements = new ArrayList<Element>();
-        //board = new Board(batch, elements, score);
-        move = new Move(elements, score);
-        version = "v. 0.0.23 alfa";
+        move = new Move(elements, score, this);
+        version = "v. 0.0.30 alfa";
 		startGame();
 
         Gdx.input.setInputProcessor(new SimpleDirectionGestureDetector
@@ -101,7 +98,7 @@ public class Game extends ApplicationAdapter {
             }
 
         for (int m = 0 ; m < elements.size(); m++) {
-            tmp = elements.get(m);
+            Element tmp = elements.get(m);
             int x = tmp.getx();
             int y = tmp.gety();
             batch.draw(tmp.getImg(), (float) (screenWidth*0.05+(screenWidth*0.02*(x+1))+(screenWidth*0.2*x)),
@@ -138,7 +135,7 @@ public class Game extends ApplicationAdapter {
 	}
 
 
-	public void update() {
+	private void update() {
         if (elements.size() > 16)
             isOver = true;
 
@@ -162,33 +159,25 @@ public class Game extends ApplicationAdapter {
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 move.moveRight();
-
                 increaseTurn();
             }
             else if(Gdx.input.isKeyPressed(Input.Keys.E)) {
-                elements.add(new Element(2, elements));
+                elements.add(new Element(2, elementId, elements));
+                elementId++;
             }
-
         }
         if (Gdx.input.isTouched()) {
             int x = Gdx.input.getX();
             int y = Gdx.graphics.getHeight() - Gdx.input.getY();
-            //System.out.println(x + " " + y);
 
             if (x > (screenWidth*0.05) && y > (screenWidth*0.05) && x < (screenWidth*0.35)
                     && y < (screenWidth*0.2)) {
                 startGame();
             }
-
         }
-
-
-
-
-
 	}
 
-    public void increaseTurn() {
+    private void increaseTurn() {
         turn++;
         savedTime = timer;
         for (int i = 0; i < elements.size(); i++) {
@@ -198,31 +187,40 @@ public class Game extends ApplicationAdapter {
         Random rand = new Random();
         int randvalue = rand.nextInt(10);
         if (randvalue == 8) {
-            elements.add(new Element(4, elements));
+            elements.add(new Element(4, elementId, elements));
         }
         else
-            elements.add(new Element(2, elements));
+            elements.add(new Element(2, elementId, elements));
+        elementId++;
     }
 
-    public void showOver() {
+    private void showOver() {
 
 
         batch.draw(overTexture, screenWidth/4, (screenHeight/2)-50, screenWidth/2, screenWidth/4);
         fontScore.draw(batch, "Score: " + score.getScore(), screenWidth/4, screenHeight/2);
     }
 
-	public void startGame() {
-        isOver =false;
+	private void startGame() {
+        elementId = 0;
+        isOver = false;
         turn = 0;
         while (elements.size() > 0) {
             elements.get(0).dispose();
             elements.remove(0);
-
         }
+
         score.resetScore();
-		elements.add(new Element(2, elements));
-        elements.add(new Element(4, elements));
+		elements.add(new Element(2, elementId, elements));
+        elementId++;
+        elements.add(new Element(4, elementId, elements));
+        elementId ++;
 	}
+
+    int getElementId() {
+        elementId++;
+        return (elementId - 1);
+    }
 
 
 }
